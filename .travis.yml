@@ -1,29 +1,28 @@
-# sistem opreasi yang digunakan
+# os yang di gunakan
 os:
   - linux
-# bahasa yang digunakan
+# bahasa
 language: php
-# menggunakan distory  yang di percaya
+# distro
 dist: trusty
 
-# versi bahasa
 php:
   - '7.1'
 # service yang digunakan
 services:
   - docker
-
-# grouping task
+# grouping  task
 jobs:
   include:
-  # untuk melakuakan testing code
+  # melakukan testing
     - stage: "Tests"
       name: "Unit Test PHP"
       script:
       - travis_retry composer self-update
       - travis_retry composer install --prefer-source --no-interaction
       - cp .env.example .env
-      - vendor/bin/phpunit tests/ExampleTest.php
+      - php artisan key:generate
+      - vendor/bin/phpunit tests/Feature/ExampleTest.php
     # untuk melakukan build image dan push ke docker hub
     - stage: "Build Docker Image"
       name: "Build Images Docker"
